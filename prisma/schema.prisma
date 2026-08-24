@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum ItemType {
+  TIP
+  TEMPLATE
+}
+
+model Tip {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  title     String
+  category  String
+  summary   String
+  body      String
+  doList    String // JSON string array
+  dontList  String // JSON string array
+  colorNote String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  quizQuestions QuizQuestion[]
+}
+
+model Template {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  name         String
+  dataType     String
+  whenToUse    String
+  layoutDesc   String
+  layoutSpec   String // JSON describing the CSS-drawable layout (boxes/grid)
+  doList       String // JSON string array
+  dontList     String // JSON string array
+  colorAdvice  String
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  quizQuestions QuizQuestion[]
+}
+
+model QuizQuestion {
+  id          Int      @id @default(autoincrement())
+  itemType    ItemType
+  tipId       Int?
+  templateId  Int?
+  question    String
+  choices     String // JSON string array
+  correctIdx  Int
+  explanation String
+
+  tip      Tip?      @relation(fields: [tipId], references: [id])
+  template Template? @relation(fields: [templateId], references: [id])
+
+  attempts QuizAttempt[]
+}
+
+model QuizAttempt {
+  id            Int      @id @default(autoincrement())
+  quizQuestionId Int
+  correct       Boolean
+  attemptedAt   DateTime @default(now())
+
+  quizQuestion QuizQuestion @relation(fields: [quizQuestionId], references: [id])
+}
+
+// Spaced-repetition state, one row per (itemType, itemSlug) — SM-2 algorithm
+model ReviewCard {
+  id            Int      @id @default(autoincrement())
+  itemType      ItemType
+  itemSlug      String
+  easeFactor    Float    @default(2.5)
+  intervalDays  Int      @default(0)
+  repetitions   Int      @default(0)
+  dueDate       DateTime @default(now())
+  lastReviewedAt DateTime?
+  createdAt     DateTime @default(now())
+
+  @@unique([itemType, itemSlug])
+}
+
+// One row per calendar day the user engaged with the daily tip (drives streak)
+model StreakLog {
+  id        Int      @id @default(autoincrement())
+  date      String   @unique // YYYY-MM-DD
+  tipSlug   String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
