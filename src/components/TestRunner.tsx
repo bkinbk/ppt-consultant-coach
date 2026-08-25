@@ -26,9 +26,10 @@ function shuffle<T>(arr: T[]): T[] {
 
 export function TestRunner({ pool, count = 5 }: { pool: TestQuestion[]; count?: number }) {
   const router = useRouter();
-  // Picked once on mount so a mid-test server re-render (e.g. after a server
-  // action revalidates this route) can't reshuffle the in-progress test.
-  const [questions] = useState(() => shuffle(pool).slice(0, count));
+  // Picked once on mount (and re-picked only via handleRestart) so a mid-test
+  // server re-render (e.g. after a server action revalidates this route)
+  // can't reshuffle the in-progress test.
+  const [questions, setQuestions] = useState(() => shuffle(pool).slice(0, count));
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
@@ -63,7 +64,7 @@ export function TestRunner({ pool, count = 5 }: { pool: TestQuestion[]; count?: 
         <p className="text-sm text-muted mb-4">
           ผลของรอบนี้ถูกบันทึกรวมเข้ากับสถิติความชำนาญของคุณด้านล่างแล้ว
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-4">
           {[...byCategory.entries()].map(([cat, e]) => (
             <span
               key={cat}
@@ -73,6 +74,12 @@ export function TestRunner({ pool, count = 5 }: { pool: TestQuestion[]; count?: 
             </span>
           ))}
         </div>
+        <button
+          onClick={handleRestart}
+          className="px-4 py-2 rounded-full bg-accent text-white text-sm font-semibold hover:opacity-90"
+        >
+          ทำอีก {count} ข้อ
+        </button>
       </div>
     );
   }
@@ -85,6 +92,14 @@ export function TestRunner({ pool, count = 5 }: { pool: TestQuestion[]; count?: 
       setFeedback(res);
       setResults((r) => [...r, { category: current.category, correct: res.correct }]);
     });
+  }
+
+  function handleRestart() {
+    setQuestions(shuffle(pool).slice(0, count));
+    setIndex(0);
+    setSelected(null);
+    setFeedback(null);
+    setResults([]);
   }
 
   function handleNext() {
