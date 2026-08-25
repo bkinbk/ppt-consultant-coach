@@ -3,6 +3,7 @@ import { getTipOfDay, getStreakInfo, getTodayStreakLog, getReviewStats } from "@
 import { MarkTipReadButton } from "@/components/MarkTipReadButton";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
 import { tagByCategory } from "@/lib/palette";
+import { HeroIllustration } from "@/components/HeroIllustration";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +17,19 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      <section className="relative overflow-hidden rounded-2xl bg-surface border border-border shadow-sm px-6 sm:px-8 py-8 flex flex-col sm:flex-row items-center gap-6">
+        <div className="flex-1 text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+            ฝึกทำ PowerPoint สไตล์ที่ปรึกษา ทีละนิด ทุกวัน
+          </h1>
+          <p className="text-muted mb-1">
+            Streak ปัจจุบัน{" "}
+            <span className="text-accent font-bold">{streak.currentStreak} วัน</span> — กลับมาฝึกทุกวันไม่ให้ลืม
+          </p>
+        </div>
+        <HeroIllustration />
+      </section>
+
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard label="Streak ปัจจุบัน" value={`${streak.currentStreak} วัน`} highlight />
         <StatCard label="Streak สูงสุด" value={`${streak.longestStreak} วัน`} />

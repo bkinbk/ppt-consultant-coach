@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllTemplates } from "@/lib/data";
 import { SlideLayoutPreview } from "@/components/SlideLayoutPreview";
 import { LayoutBox } from "@/content/types";
+import { PageHeaderBlob } from "@/components/PageHeaderBlob";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,8 @@ export default async function TemplatesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
+      <div className="relative">
+        <PageHeaderBlob />
         <h1 className="text-3xl font-bold tracking-tight mb-1">คลัง Template จัด Layout</h1>
         <p className="text-muted text-sm">
           ข้อมูลแต่ละประเภทเหมาะกับการจัดวางต่างกัน เลือกดูตามชนิดข้อมูลที่คุณมีอยู่ในมือ

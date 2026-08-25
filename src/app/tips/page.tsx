@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllTips } from "@/lib/data";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
 import { tagByCategory } from "@/lib/palette";
+import { PageHeaderBlob } from "@/components/PageHeaderBlob";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +20,8 @@ export default async function TipsPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <div>
+      <div className="relative">
+        <PageHeaderBlob />
         <h1 className="text-3xl font-bold tracking-tight mb-1">Tips ทั้งหมด</h1>
         <p className="text-muted text-sm">{tips.length} เคล็ดลับ จัดกลุ่มตามหัวข้อการทำ PowerPoint สไตล์ที่ปรึกษา</p>
       </div>

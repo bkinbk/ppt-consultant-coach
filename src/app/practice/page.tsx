@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllExercises } from "@/lib/data";
 import { tagByIndex } from "@/lib/palette";
+import { PageHeaderBlob } from "@/components/PageHeaderBlob";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,8 @@ export default async function PracticePage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
+      <div className="relative">
+        <PageHeaderBlob />
         <h1 className="text-3xl font-bold tracking-tight mb-1">ฝึกปฏิบัติ (Practice)</h1>
         <p className="text-muted text-sm">
           ลงมือลากและจัดวางองค์ประกอบจริง แทนที่จะแค่จำหลักการ — ฝึกซ้ำจนมือคุ้นกับการจัด layout สไตล์ที่ปรึกษา
