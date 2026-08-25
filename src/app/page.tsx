@@ -1,17 +1,26 @@
 import Link from "next/link";
 import type { ComponentType } from "react";
-import { getTipOfDay, getAllTipSummaries, getStreakInfo, getTodayStreakLog, getReviewStats } from "@/lib/data";
+import {
+  getTipOfDay,
+  getAllTipSummaries,
+  getStreakInfo,
+  getStreakGridHistory,
+  getTodayStreakLog,
+  getReviewStats,
+} from "@/lib/data";
 import { HeroIllustration } from "@/components/HeroIllustration";
 import { TipOfDayCard } from "@/components/TipOfDayCard";
+import { StreakGrid } from "@/components/StreakGrid";
 import { FlameIcon, StarIcon, CalendarCheckIcon, ClockIcon, CursorClickIcon, RefreshIcon, GridIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const [tip, allTips, streak, todayLog, reviewStats] = await Promise.all([
+  const [tip, allTips, streak, streakHistory, todayLog, reviewStats] = await Promise.all([
     getTipOfDay(),
     getAllTipSummaries(),
     getStreakInfo(),
+    getStreakGridHistory(25),
     getTodayStreakLog(),
     getReviewStats(),
   ]);
@@ -31,8 +40,16 @@ export default async function DashboardPage() {
         <HeroIllustration />
       </section>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard icon={FlameIcon} label="Streak ปัจจุบัน" value={`${streak.currentStreak} วัน`} highlight />
+      <div className="rounded-2xl p-4 shadow-sm border bg-accent-soft border-accent/30 flex flex-col sm:flex-row items-center gap-4">
+        <div className="text-center sm:text-left shrink-0">
+          <FlameIcon className="w-5 h-5 mx-auto sm:mx-0 mb-1.5 text-accent" />
+          <p className="text-2xl font-extrabold text-accent">{streak.currentStreak} วัน</p>
+          <p className="text-xs text-muted mt-1 font-medium">Streak ปัจจุบัน</p>
+        </div>
+        <StreakGrid history={streakHistory} />
+      </div>
+
+      <div className="grid grid-cols-3 gap-3">
         <StatCard icon={StarIcon} label="Streak สูงสุด" value={`${streak.longestStreak} วัน`} />
         <StatCard icon={CalendarCheckIcon} label="วันที่ฝึกรวม" value={`${streak.totalDaysCompleted} วัน`} />
         <StatCard icon={ClockIcon} label="รอทบทวนวันนี้" value={`${reviewStats.due} เรื่อง`} />

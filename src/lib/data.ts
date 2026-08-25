@@ -91,6 +91,24 @@ export async function getStreakInfo() {
   };
 }
 
+export async function getStreakGridHistory(days = 25) {
+  const today = bangkokDateString();
+  const dates: string[] = [];
+  for (let i = days - 1; i >= 0; i--) dates.push(addDaysToDateString(today, -i));
+
+  const logs = await prisma.streakLog.findMany({
+    where: { date: { in: dates }, completed: true },
+    select: { date: true },
+  });
+  const completedSet = new Set(logs.map((l) => l.date));
+
+  return dates.map((date) => ({
+    date,
+    completed: completedSet.has(date),
+    isToday: date === today,
+  }));
+}
+
 export async function getDueReviewCount() {
   return prisma.reviewCard.count({ where: { dueDate: { lte: new Date() } } });
 }
