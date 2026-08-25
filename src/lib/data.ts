@@ -117,45 +117,6 @@ export async function getTopicsLearnedGrid() {
   };
 }
 
-export async function getDueReviewCount() {
-  return prisma.reviewCard.count({ where: { dueDate: { lte: new Date() } } });
-}
-
-export async function getDueReviewCards(limit = 10) {
-  const cards = await prisma.reviewCard.findMany({
-    where: { dueDate: { lte: new Date() } },
-    orderBy: { dueDate: "asc" },
-    take: limit,
-  });
-
-  const results = [];
-  for (const card of cards) {
-    if (card.itemType === "TIP") {
-      const tip = await prisma.tip.findUnique({
-        where: { slug: card.itemSlug },
-        include: { quizQuestions: true },
-      });
-      if (tip) results.push({ card, tip, template: null as null, exercise: null as null });
-    } else if (card.itemType === "TEMPLATE") {
-      const template = await prisma.template.findUnique({
-        where: { slug: card.itemSlug },
-        include: { quizQuestions: true },
-      });
-      if (template) results.push({ card, tip: null as null, template, exercise: null as null });
-    } else {
-      const exercise = await prisma.exercise.findUnique({ where: { slug: card.itemSlug } });
-      if (exercise) results.push({ card, tip: null as null, template: null as null, exercise });
-    }
-  }
-  return results;
-}
-
-export async function getReviewStats() {
-  const total = await prisma.reviewCard.count();
-  const due = await getDueReviewCount();
-  return { total, due };
-}
-
 // Returns every tip quiz question, in stable order. The 5-question test is
 // picked client-side (once, on mount) from this pool — picking randomly on
 // the server would re-shuffle mid-test whenever Next.js re-renders the route

@@ -1,19 +1,19 @@
 import Link from "next/link";
-import { getTipOfDay, getAllTipSummaries, getStreakInfo, getTopicsLearnedGrid, getTodayStreakLog, getReviewStats } from "@/lib/data";
+import { getTipOfDay, getAllTipSummaries, getStreakInfo, getTopicsLearnedGrid, getTodayStreakLog } from "@/lib/data";
 import { HeroIllustration } from "@/components/HeroIllustration";
 import { TipOfDayCard } from "@/components/TipOfDayCard";
 import { TopicsGrid } from "@/components/TopicsGrid";
+import { ResetProgressButton } from "@/components/ResetProgressButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const [tip, allTips, streak, topics, todayLog, reviewStats] = await Promise.all([
+  const [tip, allTips, streak, topics, todayLog] = await Promise.all([
     getTipOfDay(),
     getAllTipSummaries(),
     getStreakInfo(),
     getTopicsLearnedGrid(),
     getTodayStreakLog(),
-    getReviewStats(),
   ]);
 
   return (
@@ -55,15 +55,11 @@ export default async function DashboardPage() {
           </p>
         </Link>
         <Link
-          href="/review"
+          href="/test"
           className="rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
-          <p className="font-bold text-foreground mb-1">ทบทวนแบบเว้นระยะ (Spaced Review)</p>
-          <p className="text-sm text-muted">
-            {reviewStats.due > 0
-              ? `มี ${reviewStats.due} เรื่องรอทบทวนวันนี้ — กลับมาย้ำความจำก่อนลืม`
-              : "วันนี้ไม่มีเรื่องรอทบทวน ทำ tip หรือควิซใหม่เพื่อสร้างคิวทบทวนถัดไป"}
-          </p>
+          <p className="font-bold text-foreground mb-1">บททดสอบ + Radar Chart</p>
+          <p className="text-sm text-muted">สุ่ม 5 ข้อจากทุกหมวด แล้วดูกราฟความชำนาญของคุณในแต่ละหมวด</p>
         </Link>
         <Link
           href="/templates"
@@ -80,6 +76,10 @@ export default async function DashboardPage() {
       >
         ดู Tips ทั้งหมด (จัดหมวดตามหัวข้อ) →
       </Link>
+
+      <div className="flex justify-center pt-2">
+        <ResetProgressButton />
+      </div>
     </div>
   );
 }

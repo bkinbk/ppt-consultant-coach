@@ -22,10 +22,9 @@ export async function markTipRead(tipSlug: string) {
     update: { completed: true, tipSlug },
     create: { date: today, tipSlug, completed: true },
   });
-  // Queue it for future spaced review the first time it's read.
+  // Tracks that this tip has been engaged with, for the topics-learned grid.
   await ensureReviewCard("TIP", tipSlug);
   revalidatePath("/");
-  revalidatePath("/review");
 }
 
 export async function submitQuizAnswer(quizQuestionId: number, choiceIdx: number) {
@@ -64,7 +63,8 @@ export async function submitQuizAnswer(quizQuestionId: number, choiceIdx: number
     });
   }
 
-  revalidatePath("/review");
+  revalidatePath("/test");
+  revalidatePath("/");
 
   return { correct, correctIdx: question.correctIdx, explanation: question.explanation };
 }
@@ -91,25 +91,13 @@ export async function submitExercise(exerciseSlug: string, correct: boolean) {
     },
   });
 
-  revalidatePath("/review");
+  revalidatePath("/");
 }
 
-export async function submitReview(reviewCardId: number, quality: number) {
-  const card = await prisma.reviewCard.findUnique({ where: { id: reviewCardId } });
-  if (!card) throw new Error("Review card not found");
-
-  const updated = sm2Update(card, quality);
-  await prisma.reviewCard.update({
-    where: { id: card.id },
-    data: {
-      easeFactor: updated.easeFactor,
-      intervalDays: updated.intervalDays,
-      repetitions: updated.repetitions,
-      dueDate: updated.dueDate,
-      lastReviewedAt: new Date(),
-    },
-  });
-
-  revalidatePath("/review");
+export async function resetProgress() {
+  await prisma.quizAttempt.deleteMany();
+  await prisma.exerciseAttempt.deleteMany();
+  await prisma.reviewCard.deleteMany();
   revalidatePath("/");
+  revalidatePath("/test");
 }

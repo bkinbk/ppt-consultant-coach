@@ -11,7 +11,7 @@ const thaiSans = Noto_Sans_Thai({
 
 export const metadata: Metadata = {
   title: "PPT Consultant Coach",
-  description: "ฝึกทำ PowerPoint สไตล์ที่ปรึกษา ด้วย tip ประจำวัน เทมเพลต และระบบทบทวนแบบเว้นระยะ",
+  description: "ฝึกทำ PowerPoint สไตล์ที่ปรึกษา ด้วย tip ประจำวัน เทมเพลต แบบฝึกหัด และบททดสอบวัดความชำนาญ",
 };
 
 const NAV_ITEMS = [
@@ -20,7 +20,6 @@ const NAV_ITEMS = [
   { href: "/templates", label: "Templates" },
   { href: "/practice", label: "ฝึกปฏิบัติ" },
   { href: "/test", label: "บททดสอบ" },
-  { href: "/review", label: "ทบทวน" },
 ];
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
