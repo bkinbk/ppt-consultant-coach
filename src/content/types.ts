@@ -63,6 +63,11 @@ export type ExerciseZone = {
   y?: number; // 0-56.25, only used when layout === "canvas"
   w?: number;
   h?: number;
+  // If true, the zone's label is scenario data the learner needs to read
+  // (e.g. a number to compare), not an answer hint — so it stays visible
+  // even before checking. Canvas-layout zones hide their label by default
+  // until checked, since the label usually names the correct answer.
+  alwaysShowLabel?: boolean;
 };
 
 export type ExerciseChip = {
@@ -71,10 +76,21 @@ export type ExerciseChip = {
   correctZoneId: string;
 };
 
+export type ExerciseAxisLabel = {
+  label: string;
+  x: number;
+  y: number;
+  w?: number;
+  h?: number;
+};
+
 export type ExerciseData = {
   layout: "canvas" | "row" | "list";
   zones: ExerciseZone[];
   chips: ExerciseChip[];
+  // Static, always-visible captions for canvas layouts (e.g. matrix axis
+  // labels) — not drop targets, just context needed to solve the exercise.
+  axisLabels?: ExerciseAxisLabel[];
 };
 
 export type ExerciseSpec = {

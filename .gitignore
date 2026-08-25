@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# personal notes dropped into the project folder, not part of the app
+*.docx
+
 # env
 .env
 .env*.local

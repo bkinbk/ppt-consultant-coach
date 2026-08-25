@@ -90,6 +90,12 @@ export const exercises: ExerciseSpec[] = [
         { id: "c3", label: "เปลี่ยนฟอนต์เว็บไซต์ (ทำง่าย กระทบน้อย)", correctZoneId: "fill-in" },
         { id: "c4", label: "รีแบรนด์โลโก้บริษัททั้งหมด (ใช้เวลานาน กระทบยอดขายน้อย)", correctZoneId: "thankless" },
       ],
+      axisLabels: [
+        { label: "↑ Impact สูง", x: 2, y: 5, w: 20 },
+        { label: "↓ Impact ต่ำ", x: 2, y: 47, w: 20 },
+        { label: "← ง่าย", x: 6, y: 54, w: 20 },
+        { label: "ยาก →", x: 72, y: 54, w: 20 },
+      ],
     },
     explanation:
       "เมทริกซ์ 2x2 ช่วยจัดลำดับความสำคัญโดยดู 2 ปัจจัยพร้อมกัน โครงการที่ Impact สูงและทำง่าย (Quick Win) ควรเริ่มก่อนเสมอ ส่วนโครงการ Impact ต่ำและทำยากควรตัดทิ้งหรือเลื่อนไปทำทีหลังสุด",
@@ -132,14 +138,14 @@ export const exercises: ExerciseSpec[] = [
     type: "POSITION",
     title: "เลือกจุดที่ควรใช้สี Accent เน้นเพียงจุดเดียว",
     instructions:
-      "สไลด์นี้ต้องการสื่อว่า 'ภาคใต้เติบโตเร็วที่สุด' ลากป้าย 'สี Accent' ไปวางบนตัวเลขที่ควรถูกไฮไลต์เพียงจุดเดียว",
+      "สไลด์นี้ต้องการเน้นว่าภูมิภาคไหนเติบโตเร็วที่สุด ลองดูตัวเลขทั้ง 4 ภูมิภาค แล้วลากป้าย 'สี Accent' ไปวางบนตัวเลขที่ควรถูกไฮไลต์เพียงจุดเดียว",
     data: {
       layout: "canvas",
       zones: [
-        { id: "north", label: "ภาคเหนือ: +4%", x: 6, y: 20, w: 20, h: 20 },
-        { id: "south", label: "ภาคใต้: +22%", x: 28, y: 20, w: 20, h: 20 },
-        { id: "east", label: "ภาคตะวันออก: +6%", x: 50, y: 20, w: 20, h: 20 },
-        { id: "west", label: "ภาคตะวันตก: +3%", x: 72, y: 20, w: 20, h: 20 },
+        { id: "north", label: "ภาคเหนือ: +4%", x: 6, y: 20, w: 20, h: 20, alwaysShowLabel: true },
+        { id: "south", label: "ภาคใต้: +22%", x: 28, y: 20, w: 20, h: 20, alwaysShowLabel: true },
+        { id: "east", label: "ภาคตะวันออก: +6%", x: 50, y: 20, w: 20, h: 20, alwaysShowLabel: true },
+        { id: "west", label: "ภาคตะวันตก: +3%", x: 72, y: 20, w: 20, h: 20, alwaysShowLabel: true },
       ],
       chips: [{ id: "c1", label: "สี Accent (เน้น 1 จุด)", correctZoneId: "south" }],
     },

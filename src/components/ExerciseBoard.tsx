@@ -110,6 +110,15 @@ export function ExerciseBoard({
           className="w-full aspect-video bg-background border border-border rounded-lg relative overflow-hidden"
           onDragOver={(e) => e.preventDefault()}
         >
+          {data.axisLabels?.map((a, i) => (
+            <span
+              key={i}
+              className="absolute text-[9px] font-medium text-muted pointer-events-none"
+              style={{ left: `${a.x}%`, top: `${pctH(a.y)}%`, width: a.w ? `${a.w}%` : undefined }}
+            >
+              {a.label}
+            </span>
+          ))}
           {data.zones.map((zone) => {
             const occupant = data.chips.find((c) => placement[c.id] === zone.id);
             return (
@@ -126,7 +135,9 @@ export function ExerciseBoard({
                   height: `${pctH(zone.h ?? 0)}%`,
                 }}
               >
-                <span className="text-[9px] text-muted absolute top-1 left-1">{zone.label}</span>
+                {(checked || zone.alwaysShowLabel) && (
+                  <span className="text-[9px] text-muted absolute top-1 left-1">{zone.label}</span>
+                )}
                 {occupant && (
                   <div
                     draggable
