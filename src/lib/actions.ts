@@ -5,7 +5,7 @@ import { prisma } from "./prisma";
 import { sm2Update, QUALITY } from "./sm2";
 import { bangkokDateString } from "./date";
 
-async function ensureReviewCard(itemType: "TIP" | "TEMPLATE", itemSlug: string) {
+async function ensureReviewCard(itemType: "TIP" | "TEMPLATE" | "EXERCISE", itemSlug: string) {
   const existing = await prisma.reviewCard.findUnique({
     where: { itemType_itemSlug: { itemType, itemSlug } },
   });
@@ -67,6 +67,31 @@ export async function submitQuizAnswer(quizQuestionId: number, choiceIdx: number
   revalidatePath("/review");
 
   return { correct, correctIdx: question.correctIdx, explanation: question.explanation };
+}
+
+export async function submitExercise(exerciseSlug: string, correct: boolean) {
+  const exercise = await prisma.exercise.findUnique({ where: { slug: exerciseSlug } });
+  if (!exercise) throw new Error("Exercise not found");
+
+  await prisma.exerciseAttempt.create({
+    data: { exerciseId: exercise.id, correct },
+  });
+
+  const card = await ensureReviewCard("EXERCISE", exerciseSlug);
+  const quality = correct ? QUALITY.GOOD : QUALITY.FORGOT;
+  const updated = sm2Update(card, quality);
+  await prisma.reviewCard.update({
+    where: { id: card.id },
+    data: {
+      easeFactor: updated.easeFactor,
+      intervalDays: updated.intervalDays,
+      repetitions: updated.repetitions,
+      dueDate: updated.dueDate,
+      lastReviewedAt: new Date(),
+    },
+  });
+
+  revalidatePath("/review");
 }
 
 export async function submitReview(reviewCardId: number, quality: number) {

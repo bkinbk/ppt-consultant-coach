@@ -9,6 +9,7 @@ datasource db {
 enum ItemType {
   TIP
   TEMPLATE
+  EXERCISE
 }
 
 model Tip {
@@ -67,6 +68,29 @@ model QuizAttempt {
   attemptedAt   DateTime @default(now())
 
   quizQuestion QuizQuestion @relation(fields: [quizQuestionId], references: [id])
+}
+
+model Exercise {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  type         String // "REORDER" | "POSITION" | "MATCH"
+  title        String
+  instructions String
+  data         String // JSON: { layout: "canvas"|"row"|"list", zones: [...], chips: [...] }
+  explanation  String
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  attempts ExerciseAttempt[]
+}
+
+model ExerciseAttempt {
+  id          Int      @id @default(autoincrement())
+  exerciseId  Int
+  correct     Boolean
+  attemptedAt DateTime @default(now())
+
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
 }
 
 // Spaced-repetition state, one row per (itemType, itemSlug) — SM-2 algorithm

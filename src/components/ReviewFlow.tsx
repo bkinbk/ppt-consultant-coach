@@ -9,11 +9,17 @@ import { QUALITY } from "@/lib/sm2";
 
 export type ReviewItem = {
   cardId: number;
-  itemType: "TIP" | "TEMPLATE";
+  itemType: "TIP" | "TEMPLATE" | "EXERCISE";
   title: string;
   detail: string;
   href: string;
   layoutSpec?: LayoutBox[];
+};
+
+const ITEM_TYPE_LABEL: Record<ReviewItem["itemType"], string> = {
+  TIP: "Tip",
+  TEMPLATE: "Template",
+  EXERCISE: "แบบฝึกหัด",
 };
 
 export function ReviewFlow({ items }: { items: ReviewItem[] }) {
@@ -51,7 +57,7 @@ export function ReviewFlow({ items }: { items: ReviewItem[] }) {
       <p className="text-sm text-muted">เหลืออีก {queue.length} เรื่อง</p>
       <div className="rounded-xl border border-border bg-surface p-6">
         <p className="text-xs uppercase tracking-wide text-accent font-semibold mb-2">
-          {current.itemType === "TIP" ? "Tip" : "Template"}
+          {ITEM_TYPE_LABEL[current.itemType]}
         </p>
         <p className="text-lg font-semibold mb-4">{current.title}</p>
 

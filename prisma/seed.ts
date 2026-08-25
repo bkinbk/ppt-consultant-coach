@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { tips } from "../src/content/tips";
 import { templates } from "../src/content/templates";
+import { exercises } from "../src/content/exercises";
 
 const adapter = new PrismaLibSql({
   url: process.env.TURSO_DATABASE_URL ?? process.env.DATABASE_URL ?? "file:./prisma/dev.db",
@@ -15,6 +16,8 @@ async function main() {
   // Clean up in dependency order so re-running the seed is idempotent.
   await prisma.quizAttempt.deleteMany();
   await prisma.quizQuestion.deleteMany();
+  await prisma.exerciseAttempt.deleteMany();
+  await prisma.exercise.deleteMany();
   await prisma.reviewCard.deleteMany();
   await prisma.tip.deleteMany();
   await prisma.template.deleteMany();
@@ -78,7 +81,24 @@ async function main() {
     }
   }
 
-  console.log(`Seeded ${tips.length} tips and ${templates.length} templates.`);
+  for (let i = 0; i < exercises.length; i++) {
+    const ex = exercises[i];
+    await prisma.exercise.create({
+      data: {
+        slug: ex.slug,
+        type: ex.type,
+        title: ex.title,
+        instructions: ex.instructions,
+        data: JSON.stringify(ex.data),
+        explanation: ex.explanation,
+        order: i,
+      },
+    });
+  }
+
+  console.log(
+    `Seeded ${tips.length} tips, ${templates.length} templates, and ${exercises.length} exercises.`
+  );
 }
 
 main()

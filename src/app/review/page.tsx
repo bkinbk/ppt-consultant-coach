@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export default async function ReviewPage() {
   const due = await getDueReviewCards(20);
 
-  const items: ReviewItem[] = due.map(({ card, tip, template }) => {
+  const items: ReviewItem[] = due.map(({ card, tip, template, exercise }) => {
     if (tip) {
       return {
         cardId: card.id,
@@ -17,13 +17,22 @@ export default async function ReviewPage() {
         href: `/tips/${tip.slug}`,
       };
     }
+    if (template) {
+      return {
+        cardId: card.id,
+        itemType: "TEMPLATE" as const,
+        title: template.name,
+        detail: `${template.whenToUse}`,
+        href: `/templates/${template.slug}`,
+        layoutSpec: JSON.parse(template.layoutSpec) as LayoutBox[],
+      };
+    }
     return {
       cardId: card.id,
-      itemType: "TEMPLATE" as const,
-      title: template!.name,
-      detail: `${template!.whenToUse}`,
-      href: `/templates/${template!.slug}`,
-      layoutSpec: JSON.parse(template!.layoutSpec) as LayoutBox[],
+      itemType: "EXERCISE" as const,
+      title: exercise!.title,
+      detail: exercise!.instructions,
+      href: `/practice/${exercise!.slug}`,
     };
   });
 

@@ -41,7 +41,16 @@ export default async function DashboardPage() {
         </section>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-3 gap-4">
+        <Link
+          href="/practice"
+          className="rounded-xl border border-accent bg-accent-soft p-5 hover:opacity-90 transition-opacity"
+        >
+          <p className="font-semibold mb-1 text-accent">ฝึกปฏิบัติ (Practice)</p>
+          <p className="text-sm text-muted">
+            ลากจัด layout จริง เรียงลำดับ จับคู่ข้อมูลกับ template — ฝึกลงมือ ไม่ใช่แค่จำ
+          </p>
+        </Link>
         <Link
           href="/review"
           className="rounded-xl border border-border bg-surface p-5 hover:border-brand transition-colors"

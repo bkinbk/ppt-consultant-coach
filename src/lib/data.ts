@@ -23,6 +23,14 @@ export async function getTemplateBySlug(slug: string) {
   });
 }
 
+export async function getAllExercises() {
+  return prisma.exercise.findMany({ orderBy: { order: "asc" } });
+}
+
+export async function getExerciseBySlug(slug: string) {
+  return prisma.exercise.findUnique({ where: { slug } });
+}
+
 export async function getTipOfDay() {
   const tips = await getAllTips();
   if (tips.length === 0) return null;
@@ -94,13 +102,16 @@ export async function getDueReviewCards(limit = 10) {
         where: { slug: card.itemSlug },
         include: { quizQuestions: true },
       });
-      if (tip) results.push({ card, tip, template: null as null });
-    } else {
+      if (tip) results.push({ card, tip, template: null as null, exercise: null as null });
+    } else if (card.itemType === "TEMPLATE") {
       const template = await prisma.template.findUnique({
         where: { slug: card.itemSlug },
         include: { quizQuestions: true },
       });
-      if (template) results.push({ card, tip: null as null, template });
+      if (template) results.push({ card, tip: null as null, template, exercise: null as null });
+    } else {
+      const exercise = await prisma.exercise.findUnique({ where: { slug: card.itemSlug } });
+      if (exercise) results.push({ card, tip: null as null, template: null as null, exercise });
     }
   }
   return results;

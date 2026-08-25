@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { href: "/", label: "หน้าหลัก" },
   { href: "/tips", label: "Tips" },
   { href: "/templates", label: "Templates" },
+  { href: "/practice", label: "ฝึกปฏิบัติ" },
   { href: "/review", label: "ทบทวน" },
 ];
 

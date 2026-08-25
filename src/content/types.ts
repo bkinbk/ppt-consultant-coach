@@ -54,6 +54,38 @@ export type LayoutBox = {
   sub?: string;
 };
 
+export type ExerciseType = "REORDER" | "POSITION" | "MATCH";
+
+export type ExerciseZone = {
+  id: string;
+  label: string;
+  x?: number; // 0-100, only used when layout === "canvas"
+  y?: number; // 0-56.25, only used when layout === "canvas"
+  w?: number;
+  h?: number;
+};
+
+export type ExerciseChip = {
+  id: string;
+  label: string;
+  correctZoneId: string;
+};
+
+export type ExerciseData = {
+  layout: "canvas" | "row" | "list";
+  zones: ExerciseZone[];
+  chips: ExerciseChip[];
+};
+
+export type ExerciseSpec = {
+  slug: string;
+  type: ExerciseType;
+  title: string;
+  instructions: string;
+  data: ExerciseData;
+  explanation: string;
+};
+
 export type TemplateSpec = {
   slug: string;
   name: string;
