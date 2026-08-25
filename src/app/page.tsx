@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getTipOfDay, getAllTipSummaries, getStreakInfo, getTopicsLearnedGrid, getTodayStreakLog } from "@/lib/data";
-import { HeroIllustration } from "@/components/HeroIllustration";
 import { TipOfDayCard } from "@/components/TipOfDayCard";
 import { TopicsGrid } from "@/components/TopicsGrid";
 import { ResetProgressButton } from "@/components/ResetProgressButton";
@@ -18,17 +18,25 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <section className="relative overflow-hidden rounded-2xl bg-surface border border-border shadow-sm px-6 sm:px-8 py-8 flex flex-col sm:flex-row items-center gap-6">
-        <div className="flex-1 text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+      <section className="relative overflow-hidden rounded-2xl shadow-sm h-64 sm:h-80">
+        <Image
+          src="/hero-space.jpg"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 1024px"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
+        <div className="relative h-full flex flex-col justify-end px-6 sm:px-8 py-8 max-w-xl">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 drop-shadow-sm">
             ฝึกทำ PowerPoint สไตล์ที่ปรึกษา ทีละนิด ทุกวัน
           </h1>
-          <p className="text-muted mb-1">
+          <p className="text-white/90">
             Streak ปัจจุบัน{" "}
-            <span className="text-accent font-bold">{streak.currentStreak} วัน</span> — กลับมาฝึกทุกวันไม่ให้ลืม
+            <span className="text-white font-bold">{streak.currentStreak} วัน</span> — กลับมาฝึกทุกวันไม่ให้ลืม
           </p>
         </div>
-        <HeroIllustration />
       </section>
 
       <div className="rounded-2xl p-4 shadow-sm border bg-surface border-border flex flex-col sm:flex-row items-center gap-4">
