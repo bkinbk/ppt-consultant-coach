@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { MarkTipReadButton } from "@/components/MarkTipReadButton";
-import { CATEGORY_ICON, ShuffleIcon } from "@/components/icons";
+import { ShuffleIcon } from "@/components/icons";
 import { tagByCategory } from "@/lib/palette";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
 
@@ -24,7 +24,6 @@ export function TipOfDayCard({
   initiallyDone: boolean;
 }) {
   const [tip, setTip] = useState(initialTip);
-  const Icon = CATEGORY_ICON[tip.category as TipCategory];
 
   function shuffle() {
     const others = allTips.filter((t) => t.slug !== tip.slug);
@@ -41,7 +40,6 @@ export function TipOfDayCard({
             tip.category as TipCategory
           )}`}
         >
-          <Icon className="w-3.5 h-3.5" />
           Tip ของวันนี้ · {TIP_CATEGORY_LABEL[tip.category as TipCategory]}
         </span>
         <button

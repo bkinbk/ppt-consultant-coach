@@ -91,22 +91,27 @@ export async function getStreakInfo() {
   };
 }
 
-export async function getStreakGridHistory(days = 25) {
-  const today = bangkokDateString();
-  const dates: string[] = [];
-  for (let i = days - 1; i >= 0; i--) dates.push(addDaysToDateString(today, -i));
+export async function getTopicsLearnedGrid() {
+  const [tips, templates, exercises, reviewCards] = await Promise.all([
+    prisma.tip.findMany({ orderBy: { order: "asc" }, select: { slug: true } }),
+    prisma.template.findMany({ orderBy: { order: "asc" }, select: { slug: true } }),
+    prisma.exercise.findMany({ orderBy: { order: "asc" }, select: { slug: true } }),
+    prisma.reviewCard.findMany({ select: { itemType: true, itemSlug: true } }),
+  ]);
 
-  const logs = await prisma.streakLog.findMany({
-    where: { date: { in: dates }, completed: true },
-    select: { date: true },
-  });
-  const completedSet = new Set(logs.map((l) => l.date));
+  const learnedKeys = new Set(reviewCards.map((rc) => `${rc.itemType}:${rc.itemSlug}`));
 
-  return dates.map((date) => ({
-    date,
-    completed: completedSet.has(date),
-    isToday: date === today,
-  }));
+  const cells = [
+    ...tips.map((t) => learnedKeys.has(`TIP:${t.slug}`)),
+    ...templates.map((t) => learnedKeys.has(`TEMPLATE:${t.slug}`)),
+    ...exercises.map((e) => learnedKeys.has(`EXERCISE:${e.slug}`)),
+  ];
+
+  return {
+    cells,
+    learnedCount: cells.filter(Boolean).length,
+    totalCount: cells.length,
+  };
 }
 
 export async function getDueReviewCount() {
