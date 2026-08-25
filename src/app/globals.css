@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3f5fb;
+  --background: #f7f8fa;
   --surface: #ffffff;
-  --foreground: #16213a;
-  --muted: #626b81;
-  --border: #e5e8f2;
-  --brand: #1f3a5f;
+  --foreground: #16181d;
+  --muted: #6b7280;
+  --border: #e7e9ee;
+  --brand: #051c33;
   --brand-foreground: #ffffff;
-  --accent: #c8791f;
-  --accent-soft: #fbe9d4;
+  --accent: #568ee2;
+  --accent-soft: #e9f0fc;
   --good: #2f7d4f;
   --bad: #b3413a;
 
-  /* "Tag" palette for category-coded cards — brand Support Colours */
-  --tag1-bg: #051c33; /* Navy */
-  --tag1-fg: #eaf1f7;
-  --tag2-bg: #6fb5ba; /* Teal */
-  --tag2-fg: #051c33;
-  --tag3-bg: #dfd1b6; /* Sand */
-  --tag3-fg: #051c33;
-  --tag4-bg: #a59fd0; /* Lilac */
-  --tag4-fg: #051c33;
+  /* Small badge palette (category labels) — brand Support Colours, used sparingly */
+  --tag1-bg: #eaf1f7;
+  --tag1-fg: #051c33; /* Navy */
+  --tag2-bg: #e6f4f5;
+  --tag2-fg: #2c6b70; /* Teal */
+  --tag3-bg: #f6f1e6;
+  --tag3-fg: #8a6d2f; /* Sand */
+  --tag4-bg: #f0eefa;
+  --tag4-fg: #5b539c; /* Lilac */
 }
 
 @theme inline {
@@ -54,20 +54,20 @@
     --foreground: #e7eaf2;
     --muted: #97a1b8;
     --border: #262f42;
-    --brand: #6f93bd;
+    --brand: #a9c3e2;
     --brand-foreground: #0e1420;
-    --accent: #e2a058;
-    --accent-soft: #3a2c19;
+    --accent: #7ba7ea;
+    --accent-soft: #1c2b42;
     --good: #5cb583;
     --bad: #e17a72;
 
-    --tag1-bg: #0f2a44;
+    --tag1-bg: #16283c;
     --tag1-fg: #bfd6ea;
-    --tag2-bg: #234c4f;
+    --tag2-bg: #163333;
     --tag2-fg: #9fd9dc;
-    --tag3-bg: #4a3f27;
+    --tag3-bg: #332c17;
     --tag3-fg: #e9ddbe;
-    --tag4-bg: #3b3560;
+    --tag4-bg: #241f3d;
     --tag4-fg: #c7c0e8;
   }
 }

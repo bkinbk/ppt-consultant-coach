@@ -2,7 +2,6 @@ import Link from "next/link";
 import { getAllTemplates } from "@/lib/data";
 import { SlideLayoutPreview } from "@/components/SlideLayoutPreview";
 import { LayoutBox } from "@/content/types";
-import { tagByIndex } from "@/lib/palette";
 
 export const dynamic = "force-dynamic";
 
@@ -19,17 +18,17 @@ export default async function TemplatesPage() {
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        {templates.map((tpl, i) => (
+        {templates.map((tpl) => (
           <Link
             key={tpl.slug}
             href={`/templates/${tpl.slug}`}
-            className="group rounded-3xl bg-surface shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col gap-3 overflow-hidden"
+            className="group rounded-2xl bg-surface border border-border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col gap-3 overflow-hidden"
           >
-            <div className={`p-4 pb-0 ${tagByIndex(i)} rounded-t-3xl`}>
+            <div className="p-4 pb-0 bg-background">
               <SlideLayoutPreview layoutSpec={JSON.parse(tpl.layoutSpec) as LayoutBox[]} />
             </div>
             <div className="px-5 pb-5">
-              <p className="font-bold">{tpl.name}</p>
+              <p className="font-bold text-foreground">{tpl.name}</p>
               <p className="text-sm text-muted mt-1 line-clamp-2">{tpl.dataType}</p>
             </div>
           </Link>

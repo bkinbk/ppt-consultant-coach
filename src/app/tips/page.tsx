@@ -40,10 +40,10 @@ export default async function TipsPage() {
                 <Link
                   key={tip.slug}
                   href={`/tips/${tip.slug}`}
-                  className={`group rounded-3xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all ${tag}`}
+                  className="group rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
                 >
-                  <p className="font-bold mb-1.5 leading-snug">{tip.title}</p>
-                  <p className="text-sm opacity-80 line-clamp-2">{tip.summary}</p>
+                  <p className="font-bold text-foreground mb-1.5 leading-snug">{tip.title}</p>
+                  <p className="text-sm text-muted line-clamp-2">{tip.summary}</p>
                 </Link>
               ))}
             </div>

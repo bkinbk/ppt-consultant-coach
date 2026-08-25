@@ -40,23 +40,23 @@ export default async function TemplateDetailPage({ params }: PageProps<"/templat
         <p className="text-[15px] leading-relaxed">{template.layoutDesc}</p>
       </div>
 
-      <div className="rounded-3xl bg-accent-soft p-5 text-sm shadow-sm">
+      <div className="rounded-2xl bg-surface border border-border border-l-4 border-l-accent p-5 text-sm shadow-sm">
         <p className="font-bold text-accent mb-1">คำแนะนำเรื่องสี</p>
-        <p>{template.colorAdvice}</p>
+        <p className="text-foreground">{template.colorAdvice}</p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="rounded-3xl bg-good/10 p-5 shadow-sm">
+        <div className="rounded-2xl bg-surface border border-border border-l-4 border-l-good p-5 shadow-sm">
           <p className="font-bold text-good mb-2">ควรทำ</p>
-          <ul className="text-sm flex flex-col gap-2 list-disc list-inside">
+          <ul className="text-sm text-foreground flex flex-col gap-2 list-disc list-inside">
             {doList.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
         </div>
-        <div className="rounded-3xl bg-bad/10 p-5 shadow-sm">
+        <div className="rounded-2xl bg-surface border border-border border-l-4 border-l-bad p-5 shadow-sm">
           <p className="font-bold text-bad mb-2">ไม่ควรทำ</p>
-          <ul className="text-sm flex flex-col gap-2 list-disc list-inside">
+          <ul className="text-sm text-foreground flex flex-col gap-2 list-disc list-inside">
             {dontList.map((item, i) => (
               <li key={i}>{item}</li>
             ))}

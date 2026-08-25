@@ -35,13 +35,13 @@ export default async function PracticePage() {
             <Link
               key={ex.slug}
               href={`/practice/${ex.slug}`}
-              className={`group rounded-3xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all ${tag}`}
+              className="group rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
-              <span className="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full bg-surface/60 mb-2 inline-block">
+              <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full mb-2 inline-block ${tag}`}>
                 {TYPE_LABEL[ex.type] ?? ex.type}
               </span>
-              <p className="font-bold mb-1.5 leading-snug">{ex.title}</p>
-              <p className="text-sm opacity-80 line-clamp-2">{ex.instructions}</p>
+              <p className="font-bold text-foreground mb-1.5 leading-snug">{ex.title}</p>
+              <p className="text-sm text-muted line-clamp-2">{ex.instructions}</p>
             </Link>
           );
         })}
