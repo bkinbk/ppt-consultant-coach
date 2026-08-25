@@ -31,9 +31,9 @@ export default async function DashboardPage() {
         <HeroIllustration />
       </section>
 
-      <div className="rounded-2xl p-4 shadow-sm border bg-accent-soft border-accent/30 flex flex-col sm:flex-row items-center gap-4">
+      <div className="rounded-2xl p-4 shadow-sm border bg-surface border-border flex flex-col sm:flex-row items-center gap-4">
         <div className="text-center sm:text-left shrink-0">
-          <p className="text-2xl font-extrabold text-accent">
+          <p className="text-2xl font-extrabold text-orange-500">
             {topics.learnedCount}
             <span className="text-base font-medium text-muted">/{topics.totalCount}</span>
           </p>

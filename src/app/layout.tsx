@@ -19,6 +19,7 @@ const NAV_ITEMS = [
   { href: "/tips", label: "Tips" },
   { href: "/templates", label: "Templates" },
   { href: "/practice", label: "ฝึกปฏิบัติ" },
+  { href: "/test", label: "บททดสอบ" },
   { href: "/review", label: "ทบทวน" },
 ];
 

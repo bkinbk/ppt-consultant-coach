@@ -1,5 +1,8 @@
 import { prisma } from "./prisma";
 import { bangkokDateString, bangkokDayIndex, addDaysToDateString } from "./date";
+import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
+
+const TIP_CATEGORIES: TipCategory[] = ["storyline", "layout", "color", "typography", "charts", "mechanics"];
 
 export async function getAllTips() {
   return prisma.tip.findMany({ orderBy: { order: "asc" } });
@@ -151,4 +154,59 @@ export async function getReviewStats() {
   const total = await prisma.reviewCard.count();
   const due = await getDueReviewCount();
   return { total, due };
+}
+
+// Returns every tip quiz question, in stable order. The 5-question test is
+// picked client-side (once, on mount) from this pool — picking randomly on
+// the server would re-shuffle mid-test whenever Next.js re-renders the route
+// after a server action (e.g. after each answer), desyncing the displayed
+// question from the answer just submitted.
+export async function getTipQuizPool() {
+  const questions = await prisma.quizQuestion.findMany({
+    where: { itemType: "TIP" },
+    include: { tip: true },
+    orderBy: { id: "asc" },
+  });
+  return questions
+    .filter((q) => q.tip)
+    .map((q) => ({
+      id: q.id,
+      question: q.question,
+      choices: JSON.parse(q.choices) as string[],
+      category: q.tip!.category as TipCategory,
+    }));
+}
+
+export async function getCategoryProficiency() {
+  const attempts = await prisma.quizAttempt.findMany({
+    where: { quizQuestion: { itemType: "TIP" } },
+    include: { quizQuestion: { include: { tip: true } } },
+  });
+
+  const stats: Record<TipCategory, { correct: number; total: number }> = {
+    storyline: { correct: 0, total: 0 },
+    layout: { correct: 0, total: 0 },
+    color: { correct: 0, total: 0 },
+    typography: { correct: 0, total: 0 },
+    charts: { correct: 0, total: 0 },
+    mechanics: { correct: 0, total: 0 },
+  };
+
+  for (const a of attempts) {
+    const cat = a.quizQuestion.tip?.category as TipCategory | undefined;
+    if (!cat) continue;
+    stats[cat].total += 1;
+    if (a.correct) stats[cat].correct += 1;
+  }
+
+  return TIP_CATEGORIES.map((category) => {
+    const { correct, total } = stats[category];
+    return {
+      category,
+      label: TIP_CATEGORY_LABEL[category],
+      correct,
+      total,
+      pct: total > 0 ? Math.round((correct / total) * 100) : 0,
+    };
+  });
 }

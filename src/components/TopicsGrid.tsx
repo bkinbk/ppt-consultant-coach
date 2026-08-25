@@ -1,5 +1,5 @@
 // Slight shade variation on learned cells, purely for visual texture.
-const SHADES = ["bg-accent", "bg-accent/75", "bg-accent/90", "bg-accent/60", "bg-accent/85"];
+const SHADES = ["bg-orange-500", "bg-orange-400", "bg-orange-600", "bg-orange-300", "bg-orange-500"];
 
 export function TopicsGrid({ cells, columns = 12 }: { cells: boolean[]; columns?: number }) {
   return (
