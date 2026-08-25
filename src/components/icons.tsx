@@ -160,6 +160,16 @@ export const CATEGORY_ICON: Record<TipCategory, ComponentType<IconProps>> = {
   mechanics: LayersIcon,
 };
 
+export function ShuffleIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <path d="M3 6h3.5L15 18H21M15 6h6v6" />
+      <path d="M21 6l-3-3M21 6l-3 3" />
+      <path d="M3 18h3.5L11 12" />
+    </svg>
+  );
+}
+
 export function LinkIcon({ className }: IconProps) {
   return (
     <svg className={className} {...base}>

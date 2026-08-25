@@ -5,6 +5,13 @@ export async function getAllTips() {
   return prisma.tip.findMany({ orderBy: { order: "asc" } });
 }
 
+export async function getAllTipSummaries() {
+  return prisma.tip.findMany({
+    orderBy: { order: "asc" },
+    select: { slug: true, title: true, summary: true, category: true },
+  });
+}
+
 export async function getTipBySlug(slug: string) {
   return prisma.tip.findUnique({
     where: { slug },

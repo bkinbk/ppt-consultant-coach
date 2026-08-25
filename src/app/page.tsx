@@ -1,26 +1,16 @@
 import Link from "next/link";
 import type { ComponentType } from "react";
-import { getTipOfDay, getStreakInfo, getTodayStreakLog, getReviewStats } from "@/lib/data";
-import { MarkTipReadButton } from "@/components/MarkTipReadButton";
-import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
-import { tagByCategory } from "@/lib/palette";
+import { getTipOfDay, getAllTipSummaries, getStreakInfo, getTodayStreakLog, getReviewStats } from "@/lib/data";
 import { HeroIllustration } from "@/components/HeroIllustration";
-import {
-  FlameIcon,
-  StarIcon,
-  CalendarCheckIcon,
-  ClockIcon,
-  CursorClickIcon,
-  RefreshIcon,
-  GridIcon,
-  CATEGORY_ICON,
-} from "@/components/icons";
+import { TipOfDayCard } from "@/components/TipOfDayCard";
+import { FlameIcon, StarIcon, CalendarCheckIcon, ClockIcon, CursorClickIcon, RefreshIcon, GridIcon } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const [tip, streak, todayLog, reviewStats] = await Promise.all([
+  const [tip, allTips, streak, todayLog, reviewStats] = await Promise.all([
     getTipOfDay(),
+    getAllTipSummaries(),
     getStreakInfo(),
     getTodayStreakLog(),
     getReviewStats(),
@@ -49,30 +39,7 @@ export default async function DashboardPage() {
       </div>
 
       {tip && (
-        <section className="rounded-2xl bg-surface border border-border p-6 shadow-sm">
-          <p
-            className={`inline-flex items-center gap-1.5 text-xs uppercase tracking-wide font-bold mb-3 px-3 py-1 rounded-full ${tagByCategory(
-              tip.category as TipCategory
-            )}`}
-          >
-            {(() => {
-              const Icon = CATEGORY_ICON[tip.category as TipCategory];
-              return <Icon className="w-3.5 h-3.5" />;
-            })()}
-            Tip ของวันนี้ · {TIP_CATEGORY_LABEL[tip.category as TipCategory]}
-          </p>
-          <h1 className="text-2xl font-bold text-foreground mb-2">{tip.title}</h1>
-          <p className="text-muted mb-5">{tip.summary}</p>
-          <div className="flex flex-wrap gap-3 items-center">
-            <Link
-              href={`/tips/${tip.slug}`}
-              className="px-4 py-2 rounded-full bg-accent text-white text-sm font-semibold shadow-sm hover:opacity-90 transition-opacity"
-            >
-              อ่านเต็ม + ทำควิซ
-            </Link>
-            <MarkTipReadButton tipSlug={tip.slug} initiallyDone={!!todayLog?.completed} />
-          </div>
-        </section>
+        <TipOfDayCard initialTip={tip} allTips={allTips} initiallyDone={!!todayLog?.completed} />
       )}
 
       <div className="grid sm:grid-cols-3 gap-4">
