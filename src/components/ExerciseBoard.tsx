@@ -205,7 +205,7 @@ export function ExerciseBoard({
           ตรวจคำตอบ
         </button>
       ) : (
-        <div className="rounded-lg border border-border bg-surface p-4 flex flex-col gap-3">
+        <div className="rounded-3xl bg-surface shadow-sm p-5 flex flex-col gap-3">
           <p className={`font-semibold ${allCorrect ? "text-good" : "text-bad"}`}>
             {allCorrect ? "ถูกต้องทั้งหมด!" : "ยังไม่ถูกทั้งหมด ลองดูคำอธิบายด้านล่าง"}
           </p>

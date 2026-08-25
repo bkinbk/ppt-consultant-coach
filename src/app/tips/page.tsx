@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllTips } from "@/lib/data";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
+import { tagByCategory } from "@/lib/palette";
 
 export const dynamic = "force-dynamic";
 
@@ -17,29 +18,32 @@ export default async function TipsPage() {
   const categoryOrder: TipCategory[] = ["storyline", "layout", "color", "typography", "charts", "mechanics"];
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-10">
       <div>
-        <h1 className="text-2xl font-semibold mb-1">Tips ทั้งหมด</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-1">Tips ทั้งหมด</h1>
         <p className="text-muted text-sm">{tips.length} เคล็ดลับ จัดกลุ่มตามหัวข้อการทำ PowerPoint สไตล์ที่ปรึกษา</p>
       </div>
 
       {categoryOrder.map((cat) => {
         const items = byCategory.get(cat);
         if (!items || items.length === 0) return null;
+        const tag = tagByCategory(cat);
         return (
           <section key={cat}>
-            <h2 className="text-sm font-semibold text-accent uppercase tracking-wide mb-3">
-              {TIP_CATEGORY_LABEL[cat]}
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div className="flex items-center gap-2 mb-3">
+              <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full ${tag}`}>
+                {TIP_CATEGORY_LABEL[cat]}
+              </span>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
               {items.map((tip) => (
                 <Link
                   key={tip.slug}
                   href={`/tips/${tip.slug}`}
-                  className="rounded-lg border border-border bg-surface p-4 hover:border-brand transition-colors"
+                  className={`group rounded-3xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all ${tag}`}
                 >
-                  <p className="font-medium mb-1">{tip.title}</p>
-                  <p className="text-sm text-muted line-clamp-2">{tip.summary}</p>
+                  <p className="font-bold mb-1.5 leading-snug">{tip.title}</p>
+                  <p className="text-sm opacity-80 line-clamp-2">{tip.summary}</p>
                 </Link>
               ))}
             </div>

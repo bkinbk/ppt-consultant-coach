@@ -29,7 +29,7 @@ export function QuizWidget({ questions }: { questions: QuizItem[] }) {
 
   if (isDone) {
     return (
-      <div className="rounded-lg border border-border bg-surface p-5 text-center">
+      <div className="rounded-3xl bg-surface shadow-sm p-5 text-center">
         <p className="text-lg font-semibold text-brand">
           ทำควิซเสร็จแล้ว: {score}/{questions.length} ข้อ
         </p>
@@ -57,7 +57,7 @@ export function QuizWidget({ questions }: { questions: QuizItem[] }) {
   }
 
   return (
-    <div className="rounded-lg border border-border bg-surface p-5">
+    <div className="rounded-3xl bg-surface shadow-sm p-5">
       <p className="text-xs text-muted mb-2">
         คำถาม {index + 1} / {questions.length}
       </p>

@@ -26,17 +26,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="th" className={`${thaiSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
-        <header className="border-b border-border bg-surface sticky top-0 z-10">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 flex items-center justify-between h-14">
-            <Link href="/" className="font-semibold text-brand tracking-tight">
+        <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 flex items-center justify-between h-16">
+            <Link href="/" className="flex items-center gap-2 font-extrabold text-brand tracking-tight">
+              <span className="w-2.5 h-2.5 rounded-full bg-accent" />
               PPT Consultant Coach
             </Link>
-            <nav className="flex gap-1 sm:gap-2">
+            <nav className="flex gap-1 sm:gap-1.5 bg-surface rounded-full p-1 shadow-sm">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="px-3 py-2 rounded-md text-sm text-muted hover:text-foreground hover:bg-background transition-colors"
+                  className="px-3 py-1.5 rounded-full text-sm font-medium text-muted hover:text-foreground hover:bg-background transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </div>
         </header>
         <main className="flex-1 mx-auto w-full max-w-5xl px-4 sm:px-6 py-8">{children}</main>
-        <footer className="border-t border-border py-6 text-center text-xs text-muted">
+        <footer className="py-6 text-center text-xs text-muted">
           ฝึกทำ PowerPoint สไตล์ที่ปรึกษา ทีละนิด ทุกวัน
         </footer>
       </body>

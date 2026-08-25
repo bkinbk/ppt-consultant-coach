@@ -30,7 +30,7 @@ export function ReviewFlow({ items }: { items: ReviewItem[] }) {
 
   if (queue.length === 0) {
     return (
-      <div className="rounded-xl border border-border bg-surface p-8 text-center">
+      <div className="rounded-3xl bg-surface shadow-sm p-8 text-center">
         <p className="font-semibold text-lg mb-1">
           {doneCount > 0 ? `ทบทวนครบแล้ว ${doneCount} เรื่อง 🎉` : "วันนี้ไม่มีเรื่องรอทบทวน"}
         </p>
@@ -55,7 +55,7 @@ export function ReviewFlow({ items }: { items: ReviewItem[] }) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm text-muted">เหลืออีก {queue.length} เรื่อง</p>
-      <div className="rounded-xl border border-border bg-surface p-6">
+      <div className="rounded-3xl bg-surface shadow-sm p-6">
         <p className="text-xs uppercase tracking-wide text-accent font-semibold mb-2">
           {ITEM_TYPE_LABEL[current.itemType]}
         </p>

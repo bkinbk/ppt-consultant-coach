@@ -1,17 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f7fb;
+  --background: #f3f5fb;
   --surface: #ffffff;
   --foreground: #16213a;
-  --muted: #5b6478;
-  --border: #e2e5ee;
+  --muted: #626b81;
+  --border: #e5e8f2;
   --brand: #1f3a5f;
   --brand-foreground: #ffffff;
   --accent: #c8791f;
   --accent-soft: #fbe9d4;
   --good: #2f7d4f;
   --bad: #b3413a;
+
+  /* Playful pastel "tag" palette used for category-coded cards */
+  --tag1-bg: #ede9fe;
+  --tag1-fg: #6d28d9;
+  --tag2-bg: #dbeafe;
+  --tag2-fg: #1d4ed8;
+  --tag3-bg: #fce7f3;
+  --tag3-fg: #db2777;
+  --tag4-bg: #fef3c7;
+  --tag4-fg: #b45309;
+  --tag5-bg: #d1fae5;
+  --tag5-fg: #047857;
+  --tag6-bg: #ffe4d5;
+  --tag6-fg: #c2410c;
 }
 
 @theme inline {
@@ -26,6 +40,18 @@
   --color-accent-soft: var(--accent-soft);
   --color-good: var(--good);
   --color-bad: var(--bad);
+  --color-tag1-bg: var(--tag1-bg);
+  --color-tag1-fg: var(--tag1-fg);
+  --color-tag2-bg: var(--tag2-bg);
+  --color-tag2-fg: var(--tag2-fg);
+  --color-tag3-bg: var(--tag3-bg);
+  --color-tag3-fg: var(--tag3-fg);
+  --color-tag4-bg: var(--tag4-bg);
+  --color-tag4-fg: var(--tag4-fg);
+  --color-tag5-bg: var(--tag5-bg);
+  --color-tag5-fg: var(--tag5-fg);
+  --color-tag6-bg: var(--tag6-bg);
+  --color-tag6-fg: var(--tag6-fg);
   --font-sans: var(--font-thai-sans);
 }
 
@@ -42,6 +68,19 @@
     --accent-soft: #3a2c19;
     --good: #5cb583;
     --bad: #e17a72;
+
+    --tag1-bg: #2c2350;
+    --tag1-fg: #c4b5fd;
+    --tag2-bg: #1c2f4d;
+    --tag2-fg: #93c5fd;
+    --tag3-bg: #3a1f34;
+    --tag3-fg: #f9a8d4;
+    --tag4-bg: #3a2e12;
+    --tag4-fg: #fcd34d;
+    --tag5-bg: #0f3328;
+    --tag5-fg: #6ee7b7;
+    --tag6-bg: #3a2213;
+    --tag6-fg: #fdba74;
   }
 }
 

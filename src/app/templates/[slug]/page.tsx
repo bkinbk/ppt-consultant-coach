@@ -22,7 +22,7 @@ export default async function TemplateDetailPage({ params }: PageProps<"/templat
         <Link href="/templates" className="text-sm text-muted hover:text-brand">
           ← กลับไปคลัง Template
         </Link>
-        <h1 className="text-2xl font-semibold mt-3">{template.name}</h1>
+        <h1 className="text-3xl font-bold tracking-tight mt-3">{template.name}</h1>
         <p className="text-muted mt-1">
           <span className="font-medium text-foreground">ใช้กับข้อมูล:</span> {template.dataType}
         </p>
@@ -40,22 +40,22 @@ export default async function TemplateDetailPage({ params }: PageProps<"/templat
         <p className="text-[15px] leading-relaxed">{template.layoutDesc}</p>
       </div>
 
-      <div className="rounded-lg border border-accent bg-accent-soft p-4 text-sm">
-        <p className="font-semibold text-accent mb-1">คำแนะนำเรื่องสี</p>
+      <div className="rounded-3xl bg-accent-soft p-5 text-sm shadow-sm">
+        <p className="font-bold text-accent mb-1">คำแนะนำเรื่องสี</p>
         <p>{template.colorAdvice}</p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="rounded-lg border border-good/40 bg-good/5 p-4">
-          <p className="font-semibold text-good mb-2">ควรทำ</p>
+        <div className="rounded-3xl bg-good/10 p-5 shadow-sm">
+          <p className="font-bold text-good mb-2">ควรทำ</p>
           <ul className="text-sm flex flex-col gap-2 list-disc list-inside">
             {doList.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
         </div>
-        <div className="rounded-lg border border-bad/40 bg-bad/5 p-4">
-          <p className="font-semibold text-bad mb-2">ไม่ควรทำ</p>
+        <div className="rounded-3xl bg-bad/10 p-5 shadow-sm">
+          <p className="font-bold text-bad mb-2">ไม่ควรทำ</p>
           <ul className="text-sm flex flex-col gap-2 list-disc list-inside">
             {dontList.map((item, i) => (
               <li key={i}>{item}</li>
