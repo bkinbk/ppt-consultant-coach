@@ -4,6 +4,7 @@ import { getTipBySlug, getAllTips } from "@/lib/data";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
 import { QuizWidget } from "@/components/QuizWidget";
 import { tagByCategory } from "@/lib/palette";
+import { CATEGORY_ICON } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -23,10 +24,14 @@ export default async function TipDetailPage({ params }: PageProps<"/tips/[slug]"
           ← กลับไปหน้า Tips ทั้งหมด
         </Link>
         <span
-          className={`inline-block text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full mt-3 mb-2 ${tagByCategory(
+          className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full mt-3 mb-2 ${tagByCategory(
             tip.category as TipCategory
           )}`}
         >
+          {(() => {
+            const Icon = CATEGORY_ICON[tip.category as TipCategory];
+            return <Icon className="w-3.5 h-3.5" />;
+          })()}
           {TIP_CATEGORY_LABEL[tip.category as TipCategory]}
         </span>
         <h1 className="text-3xl font-bold tracking-tight">{tip.title}</h1>

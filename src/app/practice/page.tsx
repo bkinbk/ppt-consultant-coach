@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getAllExercises } from "@/lib/data";
 import { tagByIndex } from "@/lib/palette";
 import { PageHeaderBlob } from "@/components/PageHeaderBlob";
+import { ArrowsUpDownIcon, TargetIcon, LinkIcon } from "@/components/icons";
+import type { ComponentType } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +17,12 @@ const TYPE_TAG_INDEX: Record<string, number> = {
   REORDER: 0,
   POSITION: 1,
   MATCH: 2,
+};
+
+const TYPE_ICON: Record<string, ComponentType<{ className?: string }>> = {
+  REORDER: ArrowsUpDownIcon,
+  POSITION: TargetIcon,
+  MATCH: LinkIcon,
 };
 
 export default async function PracticePage() {
@@ -33,13 +41,17 @@ export default async function PracticePage() {
       <div className="grid sm:grid-cols-2 gap-4">
         {exercises.map((ex) => {
           const tag = tagByIndex(TYPE_TAG_INDEX[ex.type] ?? 0);
+          const Icon = TYPE_ICON[ex.type] ?? ArrowsUpDownIcon;
           return (
             <Link
               key={ex.slug}
               href={`/practice/${ex.slug}`}
               className="group rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
-              <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full mb-2 inline-block ${tag}`}>
+              <span
+                className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full mb-2 ${tag}`}
+              >
+                <Icon className="w-3.5 h-3.5" />
                 {TYPE_LABEL[ex.type] ?? ex.type}
               </span>
               <p className="font-bold text-foreground mb-1.5 leading-snug">{ex.title}</p>

@@ -3,6 +3,7 @@ import { getAllTips } from "@/lib/data";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
 import { tagByCategory } from "@/lib/palette";
 import { PageHeaderBlob } from "@/components/PageHeaderBlob";
+import { CATEGORY_ICON } from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -30,10 +31,12 @@ export default async function TipsPage() {
         const items = byCategory.get(cat);
         if (!items || items.length === 0) return null;
         const tag = tagByCategory(cat);
+        const Icon = CATEGORY_ICON[cat];
         return (
           <section key={cat}>
             <div className="flex items-center gap-2 mb-3">
-              <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full ${tag}`}>
+              <span className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full ${tag}`}>
+                <Icon className="w-3.5 h-3.5" />
                 {TIP_CATEGORY_LABEL[cat]}
               </span>
             </div>

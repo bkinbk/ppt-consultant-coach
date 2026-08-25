@@ -1,9 +1,20 @@
 import Link from "next/link";
+import type { ComponentType } from "react";
 import { getTipOfDay, getStreakInfo, getTodayStreakLog, getReviewStats } from "@/lib/data";
 import { MarkTipReadButton } from "@/components/MarkTipReadButton";
 import { TIP_CATEGORY_LABEL, TipCategory } from "@/content/types";
 import { tagByCategory } from "@/lib/palette";
 import { HeroIllustration } from "@/components/HeroIllustration";
+import {
+  FlameIcon,
+  StarIcon,
+  CalendarCheckIcon,
+  ClockIcon,
+  CursorClickIcon,
+  RefreshIcon,
+  GridIcon,
+  CATEGORY_ICON,
+} from "@/components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -31,19 +42,23 @@ export default async function DashboardPage() {
       </section>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard label="Streak ปัจจุบัน" value={`${streak.currentStreak} วัน`} highlight />
-        <StatCard label="Streak สูงสุด" value={`${streak.longestStreak} วัน`} />
-        <StatCard label="วันที่ฝึกรวม" value={`${streak.totalDaysCompleted} วัน`} />
-        <StatCard label="รอทบทวนวันนี้" value={`${reviewStats.due} เรื่อง`} />
+        <StatCard icon={FlameIcon} label="Streak ปัจจุบัน" value={`${streak.currentStreak} วัน`} highlight />
+        <StatCard icon={StarIcon} label="Streak สูงสุด" value={`${streak.longestStreak} วัน`} />
+        <StatCard icon={CalendarCheckIcon} label="วันที่ฝึกรวม" value={`${streak.totalDaysCompleted} วัน`} />
+        <StatCard icon={ClockIcon} label="รอทบทวนวันนี้" value={`${reviewStats.due} เรื่อง`} />
       </div>
 
       {tip && (
         <section className="rounded-2xl bg-surface border border-border p-6 shadow-sm">
           <p
-            className={`inline-block text-xs uppercase tracking-wide font-bold mb-3 px-3 py-1 rounded-full ${tagByCategory(
+            className={`inline-flex items-center gap-1.5 text-xs uppercase tracking-wide font-bold mb-3 px-3 py-1 rounded-full ${tagByCategory(
               tip.category as TipCategory
             )}`}
           >
+            {(() => {
+              const Icon = CATEGORY_ICON[tip.category as TipCategory];
+              return <Icon className="w-3.5 h-3.5" />;
+            })()}
             Tip ของวันนี้ · {TIP_CATEGORY_LABEL[tip.category as TipCategory]}
           </p>
           <h1 className="text-2xl font-bold text-foreground mb-2">{tip.title}</h1>
@@ -65,6 +80,7 @@ export default async function DashboardPage() {
           href="/practice"
           className="rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
+          <CursorClickIcon className="w-5 h-5 text-accent mb-2" />
           <p className="font-bold text-foreground mb-1">ฝึกปฏิบัติ (Practice)</p>
           <p className="text-sm text-muted">
             ลากจัด layout จริง เรียงลำดับ จับคู่ข้อมูลกับ template — ฝึกลงมือ ไม่ใช่แค่จำ
@@ -74,6 +90,7 @@ export default async function DashboardPage() {
           href="/review"
           className="rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
+          <RefreshIcon className="w-5 h-5 text-accent mb-2" />
           <p className="font-bold text-foreground mb-1">ทบทวนแบบเว้นระยะ (Spaced Review)</p>
           <p className="text-sm text-muted">
             {reviewStats.due > 0
@@ -85,6 +102,7 @@ export default async function DashboardPage() {
           href="/templates"
           className="rounded-2xl bg-surface border border-border p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
+          <GridIcon className="w-5 h-5 text-accent mb-2" />
           <p className="font-bold text-foreground mb-1">คลัง Template จัด Layout</p>
           <p className="text-sm text-muted">ดูว่าข้อมูลแบบไหนควรใช้เลย์เอาต์ไหน พร้อมตัวอย่างจัดวางและคำแนะนำสี</p>
         </Link>
@@ -100,13 +118,24 @@ export default async function DashboardPage() {
   );
 }
 
-function StatCard({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  highlight,
+}: {
+  icon: ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  highlight?: boolean;
+}) {
   return (
     <div
       className={`rounded-2xl p-4 text-center shadow-sm border ${
         highlight ? "bg-accent-soft border-accent/30" : "bg-surface border-border"
       }`}
     >
+      <Icon className={`w-5 h-5 mx-auto mb-1.5 ${highlight ? "text-accent" : "text-muted"}`} />
       <p className={`text-2xl font-extrabold ${highlight ? "text-accent" : "text-foreground"}`}>{value}</p>
       <p className="text-xs text-muted mt-1 font-medium">{label}</p>
     </div>
