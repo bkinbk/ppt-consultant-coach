@@ -1,12 +1,10 @@
 import { TipCategory } from "@/content/types";
 
 export const TAG_PALETTE = [
-  { bg: "bg-tag1-bg", fg: "text-tag1-fg" },
-  { bg: "bg-tag2-bg", fg: "text-tag2-fg" },
-  { bg: "bg-tag3-bg", fg: "text-tag3-fg" },
-  { bg: "bg-tag4-bg", fg: "text-tag4-fg" },
-  { bg: "bg-tag5-bg", fg: "text-tag5-fg" },
-  { bg: "bg-tag6-bg", fg: "text-tag6-fg" },
+  { bg: "bg-tag1-bg", fg: "text-tag1-fg" }, // Navy
+  { bg: "bg-tag2-bg", fg: "text-tag2-fg" }, // Teal
+  { bg: "bg-tag3-bg", fg: "text-tag3-fg" }, // Sand
+  { bg: "bg-tag4-bg", fg: "text-tag4-fg" }, // Lilac
 ];
 
 export function tagByIndex(index: number) {
@@ -19,8 +17,8 @@ const CATEGORY_TAG_INDEX: Record<TipCategory, number> = {
   layout: 1,
   color: 2,
   typography: 3,
-  charts: 4,
-  mechanics: 5,
+  charts: 1,
+  mechanics: 3,
 };
 
 export function tagByCategory(category: TipCategory) {

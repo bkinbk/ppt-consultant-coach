@@ -17,9 +17,9 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard label="Streak ปัจจุบัน" value={`${streak.currentStreak} วัน`} tagIndex={4} />
+        <StatCard label="Streak ปัจจุบัน" value={`${streak.currentStreak} วัน`} tagIndex={0} />
         <StatCard label="Streak สูงสุด" value={`${streak.longestStreak} วัน`} tagIndex={1} />
-        <StatCard label="วันที่ฝึกรวม" value={`${streak.totalDaysCompleted} วัน`} tagIndex={0} />
+        <StatCard label="วันที่ฝึกรวม" value={`${streak.totalDaysCompleted} วัน`} tagIndex={2} />
         <StatCard label="รอทบทวนวันนี้" value={`${reviewStats.due} เรื่อง`} tagIndex={3} />
       </div>
 
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
         </Link>
         <Link
           href="/templates"
-          className={`rounded-3xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all ${tagByIndex(5)}`}
+          className={`rounded-3xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all ${tagByIndex(3)}`}
         >
           <p className="font-bold mb-1">คลัง Template จัด Layout</p>
           <p className="text-sm opacity-80">ดูว่าข้อมูลแบบไหนควรใช้เลย์เอาต์ไหน พร้อมตัวอย่างจัดวางและคำแนะนำสี</p>
